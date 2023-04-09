@@ -1,0 +1,32 @@
+// This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// © LingLingGotTheBlingBling
+///////////////////////////////////////////////////////////////////
+// README:
+//  Stay within daily time frame for S&P
+//  
+///////////////////////////////////////////////////////////////////
+
+
+//@version=5
+indicator("VIX => Expected Range", overlay = true)
+
+//get the current VIX price and SPX price
+currVIX = request.security("VIX", "", close[0])
+currSPX = close[0]
+
+//calculate potential effect on index level
+//potential effect = { (VIX as a percentage / sqrt(12))
+//                        * current SPX index price }
+potentialEffect = ((currVIX / 100) / math.sqrt(12)) * currSPX
+
+//upper vs. lower bounds
+upper = currSPX + potentialEffect
+lower = currSPX - potentialEffect
+
+plot(upper, color=color.green)
+plot(lower, color=color.red)
+
+
+
+
+
